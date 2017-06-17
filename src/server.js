@@ -15,7 +15,6 @@ import expressJwt, { UnauthorizedError as Jwt401Error } from 'express-jwt';
 import expressGraphQL from 'express-graphql';
 import jwt from 'jsonwebtoken';
 import React from 'react';
-import dotenv from 'dotenv';
 import ReactDOM from 'react-dom/server';
 import PrettyError from 'pretty-error';
 import App from './components/App';
@@ -32,11 +31,11 @@ import configureStore from './store/configureStore';
 import { setRuntimeVariable } from './actions/runtime';
 import config from './config';
 
-dotenv.load({ path: '.env.example' });
 
 /**
  * Load environment variables from .env file, where API keys and passwords are configured.
  */
+
 const app = express();
 
 //

@@ -339,7 +339,8 @@ const serverConfig = {
     // Adds a banner to the top of each generated chunk
     // https://webpack.github.io/docs/list-of-plugins.html#bannerplugin
     new webpack.BannerPlugin({
-      banner: 'require("source-map-support").install();',
+      banner: `require("source-map-support").install();
+               require("dotenv").load({ path: '.env.example' });`,
       raw: true,
       entryOnly: false,
     }),

@@ -55,5 +55,12 @@ module.exports = {
       key: process.env.TWITTER_CONSUMER_KEY || 'Ie20AZvLJI2lQD5Dsgxgjauns',
       secret: process.env.TWITTER_CONSUMER_SECRET || 'KTZ6cxoKnEakQCeSpZlaUCJWGAlTEBJj0y2EMkUBujA7zWSvaQ',
     },
+
+    kakao: {
+      native: process.env.KAKAO_NATIVE_APP,
+      rest: process.env.KAKAO_REST_API,
+      javascript: process.env.KAKAO_JAVASCRIPT,
+      admin: process.env.KAKAO_ADMIN,
+    },
   },
 };

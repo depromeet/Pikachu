@@ -9,8 +9,25 @@ yarn-error.log
 coverage
 .nyc_output
 
+lib-cov
+*.seed
+*.log
+*.csv
+*.dat
+*.out
+*.pid
+*.gz
+*.swp
+
+pids
+logs
+results
+tmp
+
+
 # API keys and secrets
 .env
+.env.example
 
 
 # Dependency directory
