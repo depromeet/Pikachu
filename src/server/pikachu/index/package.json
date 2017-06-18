@@ -1,0 +1,6 @@
+{
+  "name":"index",
+  "main":"index.router.js",
+  "version":"0.0.0",
+  "private": true
+}
