@@ -12,8 +12,8 @@ import express from 'express';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import expressJwt, { UnauthorizedError as Jwt401Error } from 'express-jwt';
-// import expressGraphQL from 'express-graphql';
-// import schema from './data/schema';
+import expressGraphQL from 'express-graphql';
+import schema from './data/schema';
 import jwt from 'jsonwebtoken';
 import React from 'react';
 import ReactDOM from 'react-dom/server';
@@ -30,8 +30,9 @@ import assets from './assets.json'; // eslint-disable-line import/no-unresolved
 import configureStore from './store/configureStore';
 import { setRuntimeVariable } from './actions/runtime';
 import config from './config';
+import connection from './server/database/connection';
 
-import { index as indexRouter } from './server/pikachu/index';
+// import { index as indexRouter } from './server/pikachu/index';
 /**
  * Load environment variables from .env file, where API keys and passwords are configured.
  */
@@ -52,6 +53,15 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
+app.get('/test', async (req, res) => {
+  try {
+    const result = await connection.query('SELECT NOW()', []);
+    res.send(result);
+  } catch (e) {
+    res.send(e);
+  }
+});
 
 //
 // Authentication
@@ -77,16 +87,17 @@ if (__DEV__) {
   app.enable('trust proxy');
 }
 
-app.use('/', indexRouter);
+// app.use('/', indexRouter);
+
 //
 // Register API middleware
 // -----------------------------------------------------------------------------
-// app.use('/graphql', expressGraphQL(req => ({
-//   schema,
-//   graphiql: __DEV__,
-//   rootValue: { request: req },
-//   pretty: __DEV__,
-// })));
+app.use('/graphql', expressGraphQL(req => ({
+  schema,
+  graphiql: __DEV__,
+  rootValue: { request: req },
+  pretty: __DEV__,
+})));
 
 //
 // Register server-side rendering middleware

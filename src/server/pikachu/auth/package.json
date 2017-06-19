@@ -1,6 +1,6 @@
 {
-  "main":"auth.router.js",
   "name":"auth",
-  "version":"0.0.0",
+  "main":"auth.router.js",
+  "version":"1.0.0",
   "private":true
 }

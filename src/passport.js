@@ -22,10 +22,10 @@ import config from './config';
  * Sign in with Facebook.
  */
 passport.use(new FacebookStrategy({
-  clientID: config.auth.facebook.id,
-  clientSecret: config.auth.facebook.secret,
-  callbackURL: '/login/facebook/return',
-  profileFields: ['displayName', 'name', 'email', 'link', 'locale', 'timezone'],
+  clientID: process.env.FACEBOOK_ID,
+  clientSecret: process.env.FACEBOOK_SECRET,
+  callbackURL: '/auth/facebook/callback',
+  profileFields: ['displayName', 'name', 'gender', 'email', 'link', 'locale', 'timezone'],
   passReqToCallback: true,
 }, (req, accessToken, refreshToken, profile, done) => {
   /* eslint-disable no-underscore-dangle */
