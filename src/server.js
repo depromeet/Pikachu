@@ -31,6 +31,7 @@ import configureStore from './store/configureStore';
 import { setRuntimeVariable } from './actions/runtime';
 import config from './config';
 import connection from './server/database/connection';
+import u from './utils/util';
 
 // import { index as indexRouter } from './server/pikachu/index';
 /**
@@ -56,8 +57,9 @@ app.use(bodyParser.json());
 
 app.get('/test', async (req, res) => {
   try {
-    const result = await connection.query('SELECT NOW()', []);
-    res.send(result);
+    // const result = await connection.query('SELECT NOW()' /* ,param(optional) */);
+    res.send(u.convertToCamel({ 'TE_ST': 'bbb', 'KKK': {'AA': 5 } }));
+    // res.send(result);
   } catch (e) {
     res.send(e);
   }

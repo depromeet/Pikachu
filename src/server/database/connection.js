@@ -1,4 +1,5 @@
 import mysql from 'mysql';
+import u from '../../utils/util';
 
 const pool = mysql.createPool({
   host: process.env.DATABASE_HOST,
@@ -34,7 +35,7 @@ const query = (queryString, params) => new Promise((res, rej) => {
         return rej(e);
       }
 
-      return res(rows);
+      return res(u.convertToCamel(rows));
     });
   });
 });

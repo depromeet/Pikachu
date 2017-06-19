@@ -1,0 +1,9 @@
+{
+  "name":"passport",
+  "main":"passport.js",
+  "version":"0.0.0",
+  "functions":[
+    "local-login"
+  ],
+  "private":false
+}
