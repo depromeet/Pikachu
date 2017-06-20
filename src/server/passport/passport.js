@@ -16,7 +16,7 @@ passport.deserializeUser(async (id, done) => {
   }
 });
 
-passport.use(new LocalStrategy({ usernameField: 'email' }, async (email, password, done) => {
+passport.use(new LocalStrategy({ usernameField: 'email' }, async (email, password, name, done) => {
   try {
     const user = await connection.query('SELECT * FROM TB_MEMBER WHERE MBR_EAMIL=?', [email]);
     //

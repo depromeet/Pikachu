@@ -1,11 +1,15 @@
-import _ from 'lodash';
+import _ from 'partial-js';
 import camel from 'to-camel-case';
 
 const convertToCamel = (result) => {
   const camalResult = {};
-  console.error(result);
+
   _.each(result, (v, k) => {
-    camalResult[camel(k)] = _.isObject(v) ? convertToCamel(v) : result[k];
+    if (!_.isArray(result)) {
+      camalResult[camel(k)] = _.isObject(v) ? convertToCamel(v) : result[k];
+    } else {
+      camalResult[k] = result[k];
+    }
   });
 
   return camalResult;

@@ -28,15 +28,19 @@ const getConnection = (callback) => {
 // callback(err, rows)
 const query = (queryString, params) => new Promise((res, rej) => {
   getConnection((err, conn) => {
-    conn.query(queryString, params, (e, rows) => {
+    let query = conn.query(queryString, params, (e, rows) => {
       conn.release();
 
       if (e) {
         return rej(e);
       }
+      console.log(rows);
+      console.log('bbbbbb');
 
       return res(u.convertToCamel(rows));
     });
+
+    console.log(query);
   });
 });
 

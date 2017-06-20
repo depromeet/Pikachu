@@ -12,12 +12,14 @@ import express from 'express';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import expressJwt, { UnauthorizedError as Jwt401Error } from 'express-jwt';
+import expressValidator from 'express-validator';
 import expressGraphQL from 'express-graphql';
-import schema from './data/schema';
-import jwt from 'jsonwebtoken';
+// import jwt from 'jsonwebtoken';
 import React from 'react';
 import ReactDOM from 'react-dom/server';
 import PrettyError from 'pretty-error';
+import flash from 'express-flash';
+import schema from './data/schema';
 import App from './components/App';
 import Html from './components/Html';
 import { ErrorPageWithoutStyle } from './routes/error/ErrorPage';
@@ -31,9 +33,8 @@ import configureStore from './store/configureStore';
 import { setRuntimeVariable } from './actions/runtime';
 import config from './config';
 import connection from './server/database/connection';
-import u from './utils/util';
+import indexRouter from './server/pikachu/api/index';
 
-// import { index as indexRouter } from './server/pikachu/index';
 /**
  * Load environment variables from .env file, where API keys and passwords are configured.
  */
@@ -52,18 +53,23 @@ global.navigator.userAgent = global.navigator.userAgent || 'all';
 // -----------------------------------------------------------------------------
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cookieParser());
-app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+app.use(expressValidator());
 
 app.get('/test', async (req, res) => {
   try {
-    // const result = await connection.query('SELECT NOW()' /* ,param(optional) */);
-    res.send(u.convertToCamel({ 'TE_ST': 'bbb', 'KKK': {'AA': 5 } }));
+    const result = await connection.query('SELECT NOW() as test' /* ,param(optional) */);
+    res.send(result);
     // res.send(result);
   } catch (e) {
     res.send(e);
   }
 });
+
+app.use('/api/', indexRouter);
 
 //
 // Authentication
