@@ -14,18 +14,20 @@ import bodyParser from 'body-parser';
 import expressJwt, { UnauthorizedError as Jwt401Error } from 'express-jwt';
 import expressValidator from 'express-validator';
 import expressGraphQL from 'express-graphql';
+import errorHandler from 'errorhandler';
 // import jwt from 'jsonwebtoken';
+import logger from 'morgan';
 import React from 'react';
 import ReactDOM from 'react-dom/server';
 import PrettyError from 'pretty-error';
-import flash from 'express-flash';
+import passport from 'passport';
+// import flash from 'express-flash';
 import schema from './data/schema';
 import App from './components/App';
 import Html from './components/Html';
 import { ErrorPageWithoutStyle } from './routes/error/ErrorPage';
 import errorPageStyle from './routes/error/ErrorPage.css';
 import createFetch from './createFetch';
-import passport from './passport';
 import router from './router';
 import models from './data/models';
 import assets from './assets.json'; // eslint-disable-line import/no-unresolved
@@ -34,6 +36,7 @@ import { setRuntimeVariable } from './actions/runtime';
 import config from './config';
 import connection from './server/database/connection';
 import indexRouter from './server/pikachu/api/index';
+import passConf from './server/passport';
 
 /**
  * Load environment variables from .env file, where API keys and passwords are configured.
@@ -54,6 +57,7 @@ global.navigator.userAgent = global.navigator.userAgent || 'all';
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cookieParser());
 
+app.use(logger('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
@@ -69,13 +73,11 @@ app.get('/test', async (req, res) => {
   }
 });
 
-app.use('/api/', indexRouter);
-
 //
 // Authentication
 // -----------------------------------------------------------------------------
 app.use(expressJwt({
-  secret: config.auth.jwt.secret,
+  secret: 'test', // config.auth.jwt.secret,
   credentialsRequired: false,
   getToken: req => req.cookies.id_token,
 }));
@@ -97,6 +99,8 @@ if (__DEV__) {
 
 // app.use('/', indexRouter);
 
+app.use('/api/', indexRouter); // 권한이 필요없는 경우
+app.use('/sample', passConf.isAuthenticated, passConf.isAuthorized);
 //
 // Register API middleware
 // -----------------------------------------------------------------------------
@@ -210,6 +214,7 @@ app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
   res.send(`<!doctype html>${html}`);
 });
 
+app.use(errorHandler());
 //
 // Launch the server
 // -----------------------------------------------------------------------------

@@ -16,19 +16,19 @@ passport.deserializeUser(async (id, done) => {
   }
 });
 
-passport.use(new LocalStrategy({ usernameField: 'email' }, async (email, password, name, done) => {
+passport.use(new LocalStrategy({ usernameField: 'email' }, async (email, password, done) => {
   try {
-    const user = await connection.query('SELECT * FROM TB_MEMBER WHERE MBR_EAMIL=?', [email]);
+    const user = await connection.query('SELECT * FROM TB_MEMBER WHERE MBR_EMAIL=?', [email]);
     //
     if (!user) {
-      return done(null, false, { msg: '가입된 회원이 아닙니다. 다시시도해주세요' });
+      return done(new Error('이메일이나 패스워드가 잘못되었습니다.'), null);
     }
 
     let result = null;
-    if (user.password === password) {
-      result = done(null, user);
+    if (user[0].password === password) {
+      result = done(null, user[0]);
     } else {
-      result = done(null, false, { msg: '이메일이나 패스워드가 잘못되었습니다.' });
+      result = done(new Error('이메일이나 패스워드가 잘못되었습니다.'), null);
     }
 
     return result;
@@ -36,3 +36,32 @@ passport.use(new LocalStrategy({ usernameField: 'email' }, async (email, passwor
     return done(e);
   }
 }));
+
+/**
+ * Login Required middleware.
+ */
+const isAuthenticated = (req, res, next) => {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+
+  return res.redirect('/login');
+};
+
+/**
+ * Authorization Required middleware.
+ */
+const isAuthorized = (req, res, next) => {
+  const provider = req.path.split('/').slice(-1)[0];
+  const token = req.user.tokens.find(t => t.kind === provider);
+  if (token) {
+    next();
+  } else {
+    res.redirect(`/auth/${provider}`);
+  }
+};
+
+export default {
+  isAuthenticated,
+  isAuthorized,
+};
