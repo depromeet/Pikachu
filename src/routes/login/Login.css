@@ -103,6 +103,16 @@
   background: #c23321;
 }
 
+.kakao {
+  border-color: #F6DC32;
+  background:#F6DC32;
+  composes: button;
+}
+
+.kakao:hover {
+  background: #F6DC32;
+}
+
 .twitter {
   border-color: #55acee;
   background: #55acee;

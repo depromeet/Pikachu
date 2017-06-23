@@ -1,22 +1,53 @@
 import passport from 'passport';
+import _ from 'partial-js';
 import userDML from './index.dml';
 
 const postLogin = (req, res, next) => {
-  passport.authenticate('local', (err, user, info) => {
-    if (err) { return next(err); }
+  req.assert('email', 'Email is not valid').isEmail();
+  req.assert('password', 'Password cannot be blank').notEmpty();
+  req.sanitize('email').normalizeEmail({ gmail_remove_dots: false });
+
+  const errors = req.validationErrors();
+
+  if (errors) {
+    return res.send({
+      code: 0,
+      success: false,
+      msg: 'validation Error',
+      data: {},
+    });
+  }
+
+  return passport.authenticate('local', (err, user, info) => {
+    if (err) {
+      return res.send({
+        code: 0,
+        success: false,
+        msg: err.message,
+        data: info,
+      });
+    }
 
     if (!user) {
-      req.flash('errors', info);
-      return res.redirect('/login');
+      return res.send({
+        code: 0,
+        success: false,
+        msg: 'validation Error',
+        data: info,
+      });
     }
 
     return req.logIn(user, (e) => {
-      if (err) {
-        return next(e);
-      }
+      if (e) { return res.send(e); }
 
-      req.flash('success', { msg: 'Success! You are logged in.' });
-      return res.redirect(req.session.returnTo || '/');
+      req.result = {
+        code: 200,
+        success: true,
+        msg: '',
+        user: _.pick(user, 'mbrNb'),
+      };
+
+      return next();
     });
   })(req, res, next);
 };
@@ -32,6 +63,7 @@ const postSignUp = async (req, res, next) => {
   if (errors) {
     return res.send({
       code: 0,
+      success: false,
       msg: '파라미터 제대로 전달안댐',
       data: errors,
     });
@@ -48,12 +80,13 @@ const postSignUp = async (req, res, next) => {
       // req.flash('errors', { msg: 'Account with that email address already exists.' });
       return res.send({
         code: 0,
+        success: false,
         msg: 'Account with that email address already exists.',
-        data: false,
+        data: {},
       });
     }
 
-    const insertResult = await userDML.insertUser({
+    const result = await userDML.insertUser({
       email: req.body.email,
       name: req.body.name,
       password: req.body.password,
@@ -61,8 +94,9 @@ const postSignUp = async (req, res, next) => {
 
     return res.send({
       code: 200,
+      success: true,
       msg: 'insert',
-      data: insertResult,
+      data: result.insertId,
     });
   } catch (err) {
     return next(err);
