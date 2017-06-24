@@ -19,10 +19,6 @@
   max-width: 380px;
 }
 
-.lead {
-  font-size: 1.25em;
-}
-
 .formGroup {
   margin-bottom: 15px;
 }
@@ -111,16 +107,6 @@
 
 .kakao:hover {
   background: #F6DC32;
-}
-
-.twitter {
-  border-color: #55acee;
-  background: #55acee;
-  composes: button;
-}
-
-.twitter:hover {
-  background: #2795e9;
 }
 
 .icon {
