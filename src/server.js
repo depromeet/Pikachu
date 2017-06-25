@@ -81,6 +81,7 @@ app.use(expressJwt({
   credentialsRequired: false,
   getToken: req => req.cookies.id_token,
 }));
+
 // Error handler for express-jwt
 app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
   if (err instanceof Jwt401Error) {

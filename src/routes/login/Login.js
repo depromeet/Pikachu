@@ -122,7 +122,7 @@ class Login extends React.Component {
 }
 
 const mapState = state => ({
-
+  payload: state.payload,
 });
 
 const mapDispatch = {

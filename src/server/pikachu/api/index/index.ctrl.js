@@ -3,6 +3,8 @@ import _ from 'partial-js';
 import userDML from './index.dml';
 
 const postLogin = (req, res, next) => {
+  console.info(req.body);
+  console.info('aaa');
   req.assert('email', 'Email is not valid').isEmail();
   req.assert('password', 'Password cannot be blank').notEmpty();
   req.sanitize('email').normalizeEmail({ gmail_remove_dots: false });
