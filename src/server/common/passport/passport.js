@@ -1,3 +1,5 @@
+/* eslint-disable no-underscore-dangle */
+
 import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import { Strategy as FacebookStrategy } from 'passport-facebook';
@@ -64,7 +66,7 @@ passport.use(new FacebookStrategy({
       if (userLogin) {
         done();
       } else {
-        const result = await authDml.insertFacebookUser({
+        const insertId = await authDml.insertFacebookUser({
           email: profile._json.email,
           name: profile.displayName,
           picture: `https://graph.facebook.com/${profile.id}/picture?type=large`,
@@ -73,7 +75,7 @@ passport.use(new FacebookStrategy({
         });
 
         const user = await authDml.deserializeUser({
-          mbrNb: result.insertId,
+          mbrNb: insertId,
         });
 
         done(null, {
@@ -94,7 +96,7 @@ passport.use(new FacebookStrategy({
           email: userLogin.mbrEmail,
         });
       } else {
-        const result = await authDml.insertFacebookUser({
+        const insertId = await authDml.insertFacebookUser({
           email: profile._json.email,
           name: profile.displayName,
           picture: `https://graph.facebook.com/${profile.id}/picture?type=large`,
@@ -103,7 +105,7 @@ passport.use(new FacebookStrategy({
         });
 
         const user = await authDml.deserializeUser({
-          mbrNb: result.insertId,
+          mbrNb: insertId,
         });
 
         done(null, {
