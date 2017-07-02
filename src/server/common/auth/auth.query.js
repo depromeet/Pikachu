@@ -5,8 +5,8 @@ export default {
       VALUES (?, ?, ?)
     `,
     insertFacebookUser: `
-      INSERT INTO TB_MEMBER (MBR_EMAIL, MBR_NAME, SOCIAL_VENDOR, PICTURE, AUTH_STR, AUTH_YN)
-      VALUES (?, ?, 'facebook', ?, ?, 'Y')
+      INSERT INTO TB_MEMBER (MBR_EMAIL, MBR_NAME, SOCIAL_VENDOR, PICTURE, SOCIAL_ID, TOKEN, AUTH_YN)
+      VALUES (?, ?, 'facebook', ?, ?, ?, 'Y')
     `,
   },
 
@@ -21,7 +21,7 @@ export default {
     `,
     facebookLoginCheck: `
       SELECT * FROM TB_MEMBER
-      WHERE SOCIAL_VENDOR=? AND AUTH_STR=?
+      WHERE SOCIAL_VENDOR=? AND SOCIAL_ID=?
     `,
   },
 };
