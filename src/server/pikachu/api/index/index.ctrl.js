@@ -3,8 +3,6 @@ import _ from 'partial-js';
 import userDML from './index.dml';
 
 const postLogin = (req, res, next) => {
-  console.info(req.body);
-  console.info('aaa');
   req.assert('email', 'Email is not valid').isEmail();
   req.assert('password', 'Password cannot be blank').notEmpty();
   req.sanitize('email').normalizeEmail({ gmail_remove_dots: false });
@@ -73,9 +71,7 @@ const postSignUp = async (req, res, next) => {
 
   try {
     const findUser = await userDML.selectUser({
-      cond: {
-        email: req.body.email,
-      },
+      userEmail: req.body.email,
     });
 
     if (findUser[0]) { // 이미 기존에 가입된 회원이 존재하는 경우

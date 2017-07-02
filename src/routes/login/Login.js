@@ -35,7 +35,7 @@ class Login extends React.Component {
         <div className={s.container}>
           <h1>{this.props.title}</h1>
           <div className={s.formGroup}>
-            <a className={s.facebook} href="/login/facebook">
+            <a className={s.facebook} href="/auth/facebook">
               <svg
                 className={s.icon}
                 width="30"

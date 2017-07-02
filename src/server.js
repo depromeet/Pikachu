@@ -36,7 +36,8 @@ import { setRuntimeVariable } from './actions/runtime';
 import config from './config';
 import connection from './server/database/connection';
 import indexRouter from './server/pikachu/api/index';
-import passConf from './server/passport';
+import authRouter from './server/pikachu/auth';
+import passConf from './server/common/passport';
 
 /**
  * Load environment variables from .env file, where API keys and passwords are configured.
@@ -93,13 +94,13 @@ app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
 });
 
 app.use(passport.initialize());
-
+app.use(passport.session());
 if (__DEV__) {
   app.enable('trust proxy');
 }
 
 // app.use('/', indexRouter);
-
+app.use('/auth', authRouter);
 app.use('/api/', indexRouter); // 권한이 필요없는 경우
 app.use('/sample', passConf.isAuthenticated, passConf.isAuthorized);
 //

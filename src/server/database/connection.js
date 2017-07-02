@@ -27,12 +27,12 @@ const getConnection = (callback) => {
 
 // Helper function for querying the db; releases the db connection
 // callback(err, rows)
+// 디버깅 모드일 때 queryString을 출력해 줄 수 있게 해줄 것..
 const query = (queryString, params) => new Promise((res, rej) => {
   getConnection((err, conn) => {
     if (err) {
       rej(err);
     }
-
     const sql = conn.query(queryString, params, (e, rows) => {
       if (e) {
         return rej(e);
