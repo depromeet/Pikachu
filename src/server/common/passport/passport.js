@@ -1,4 +1,4 @@
-/* eslint-disable no-underscore-dangle */
+/* eslint-disable no-underscore-dangle, dot-notation */
 
 import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
@@ -7,11 +7,15 @@ import authDml from '../auth';
 import config from '../../config';
 
 passport.serializeUser((user, done) => {
-  done(null, user);
+  console.info('passport serializeUser');
+  console.info(user);
+
+  done(null, user.id);
 });
 
 passport.deserializeUser(async (no, done) => {
   // findBy User
+  console.info('testttt');
   try {
     const user = authDml.deserializeUser({
       mbrNb: no,
@@ -88,6 +92,7 @@ passport.use(new FacebookStrategy({
         vender: loginName,
         id: profile.id,
       });
+
       console.info('passport87');
       console.info(userLogin);
       if (userLogin) { // 소셜로그인을 통해 로그인이된경우
@@ -126,7 +131,7 @@ const isAuthenticated = (req, res, next) => {
   if (req.isAuthenticated()) {
     return next();
   }
-
+  console.info(req.path);
   return res.redirect('/login');
 };
 
@@ -135,7 +140,7 @@ const isAuthenticated = (req, res, next) => {
  */
 const isAuthorized = (req, res, next) => {
   const provider = req.path.split('/').slice(-1)[0];
-  const token = req.user.tokens.find(t => t.kind === provider);
+  const token = req.cookies['id_token'];
   if (token) {
     next();
   } else {

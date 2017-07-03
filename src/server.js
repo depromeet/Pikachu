@@ -38,6 +38,7 @@ import connection from './server/database/connection';
 import indexRouter from './server/pikachu/api/index';
 import authRouter from './server/pikachu/auth';
 import passConf from './server/common/passport';
+import serverConfig from './server/config';
 
 /**
  * Load environment variables from .env file, where API keys and passwords are configured.
@@ -78,7 +79,7 @@ app.get('/test', async (req, res) => {
 // Authentication
 // -----------------------------------------------------------------------------
 app.use(expressJwt({
-  secret: 'test', // config.auth.jwt.secret,
+  secret: serverConfig.auth.jwt.secret, // config.auth.jwt.secret,
   credentialsRequired: false,
   getToken: req => req.cookies.id_token,
 }));
@@ -94,7 +95,7 @@ app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
 });
 
 app.use(passport.initialize());
-app.use(passport.session());
+
 if (__DEV__) {
   app.enable('trust proxy');
 }
