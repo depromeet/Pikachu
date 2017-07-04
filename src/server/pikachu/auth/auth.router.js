@@ -20,11 +20,7 @@ router.get('/facebook/callback', /*
          */ passport.authenticate('facebook', { failureRedirect: '/login', session: false }), /* 1차 미들 웨어
          */ (req, res) => {
            const expiresIn = 60 * 60 * 24 * 180; // 180 days
-           console.info('sadfadsfadf');
-           console.info(req.user);
            const token = jwt.sign(req.user, config.auth.jwt.secret, { expiresIn });
-           console.info('token info');
-           console.info(token);
            res.cookie('id_token', token, { maxAge: 1000 * expiresIn, httpOnly: true });
            res.redirect(req.query.returnTo || '/');
          }); // 2차 미들웨어

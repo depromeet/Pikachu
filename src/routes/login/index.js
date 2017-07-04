@@ -17,10 +17,10 @@ export default {
 
   path: '/login',
 
-  action() {
+  action({ query }) {
     return {
       title,
-      component: <Layout><Login title={title} /></Layout>,
+      component: <Layout><Login title={title} returnTo={query.returnTo || ''} /></Layout>,
     };
   },
 

@@ -30,12 +30,17 @@ class Login extends React.Component {
   }
 
   render() {
+    let queryString = '';
+    if (this.props.returnTo) {
+      queryString = `?returnTo=${this.props.returnTo}`;
+    }
+
     return (
       <div className={s.root}>
         <div className={s.container}>
           <h1>{this.props.title}</h1>
           <div className={s.formGroup}>
-            <a className={s.facebook} href="/auth/facebook">
+            <a className={s.facebook} href={`/auth/facebook${queryString}`}>
               <svg
                 className={s.icon}
                 width="30"
@@ -138,6 +143,7 @@ Login.defaultProps = {
 
 Login.propTypes = {
   title: PropTypes.string.isRequired,
+  returnTo: PropTypes.string,
   actionPostLogin: PropTypes.func.isRequired,
   user: PropTypes.shape({
     name: PropTypes.string,

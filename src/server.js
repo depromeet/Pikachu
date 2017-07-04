@@ -121,28 +121,28 @@ app.get('*', async (req, res, next) => {
   try {
     const css = new Set();
 
-    const fetch = createFetch({
+    const fetch = createFetch({ // fetch를 이용해서 서버에 요청을 보낼 수 있다 공통 url과 cookie값을 사용한다.
       baseUrl: config.api.serverUrl,
       cookie: req.headers.cookie,
     });
 
-    const initialState = {
+    const initialState = { // 유저에 대한 정보를 같이 넘겨줌.
       user: req.user || null,
     };
 
-    const store = configureStore(initialState, {
+    const store = configureStore(initialState, { // 기본적인 유저에 대한 정보와 유저가 요청을 보내기 위한 fetch 함수를 저장한다
       fetch,
       // I should not use `history` on server.. but how I do redirection? follow universal-router
     });
 
-    store.dispatch(setRuntimeVariable({
+    store.dispatch(setRuntimeVariable({ // 실행 시간에 대한 정보를 담고 있는 state action
       name: 'initialNow',
       value: Date.now(),
     }));
 
     // Global (context) variables that can be easily accessed from any React component
     // https://facebook.github.io/react/docs/context.html
-    const context = {
+    const context = { // 전역 변수로 css 관련된 것들과 fetch함수 store를 넘겨준다.
       // Enables critical path CSS rendering
       // https://github.com/kriasoft/isomorphic-style-loader
       insertCss: (...styles) => {
@@ -161,7 +161,7 @@ app.get('*', async (req, res, next) => {
       query: req.query,
     });
 
-    if (route.redirect) {
+    if (route.redirect) { // 특정한 경로로 들어왔을때 router.resolve가 redirect에 대한 정보를 리턴하면 해당 페이지로 리다이렉트함.
       res.redirect(route.status || 302, route.redirect);
       return;
     }

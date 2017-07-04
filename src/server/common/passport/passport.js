@@ -131,8 +131,8 @@ const isAuthenticated = (req, res, next) => {
   if (req.isAuthenticated()) {
     return next();
   }
-  console.info(req.path);
-  return res.redirect('/login');
+  console.info(req.originalUrl);
+  return res.redirect(`/login?returnTo=${req.originalUrl}`);
 };
 
 /**
