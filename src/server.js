@@ -67,13 +67,15 @@ app.use(cookieParser());
 app.use(logger('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+// http://inma.tistory.com/45
 app.use(session({
   store: new RedisStore({
     client: redisClient,
-    host: config.redis.host,
-    port: config.redis.port,
+    host: serverConfig.redis.host,
+    port: serverConfig.redis.port,
   }),
-  secret: config.redis.secret,
+  secret: serverConfig.redis.secret,
   resave: true,
   saveUninitialized: true,
 }));
