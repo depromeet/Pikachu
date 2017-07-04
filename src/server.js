@@ -21,6 +21,10 @@ import React from 'react';
 import ReactDOM from 'react-dom/server';
 import PrettyError from 'pretty-error';
 import passport from 'passport';
+import redis from 'redis';
+import session from 'express-session';
+import connectRedis from 'connect-redis';
+
 // import flash from 'express-flash';
 import schema from './data/schema';
 import App from './components/App';
@@ -45,7 +49,8 @@ import serverConfig from './server/config';
  */
 
 const app = express();
-
+const redisClient = redis.createClient();
+const RedisStore = connectRedis(session);
 //
 // Tell any CSS tooling (such as Material UI) to use all vendor prefixes if the
 // user agent is not known.
@@ -62,7 +67,16 @@ app.use(cookieParser());
 app.use(logger('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
+app.use(session({
+  store: new RedisStore({
+    client: redisClient,
+    host: config.redis.host,
+    port: config.redis.port,
+  }),
+  secret: config.redis.secret,
+  resave: true,
+  saveUninitialized: true,
+}));
 app.use(expressValidator());
 
 app.get('/test', async (req, res) => {

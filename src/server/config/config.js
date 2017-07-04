@@ -28,4 +28,16 @@ export default {
       admin: process.env.KAKAO_ADMIN,
     },
   },
+
+  aws: {
+    s3: {
+      region: process.env.AWS_S3_REGION,
+    },
+  },
+
+  redis: {
+    host: process.env.REDIS_HOST,
+    port: process.env.REDIS_PORT,
+    secret: process.env.REDIS_PASS,
+  },
 };

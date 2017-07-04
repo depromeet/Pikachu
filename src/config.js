@@ -63,10 +63,4 @@ module.exports = {
       admin: process.env.KAKAO_ADMIN,
     },
   },
-
-  aws: {
-    s3: {
-      region: process.env.AWS_S3_REGION,
-    },
-  },
 };
