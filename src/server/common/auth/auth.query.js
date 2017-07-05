@@ -1,27 +1,38 @@
 export default {
   insert: {
     singUp: `
-      INSERT INTO TB_MEMBER (MBR_EMAIL, MBR_NAME, PASSWORD)
+      INSERT INTO TB_USER_INFO (USER_EMAIL, USER_NAME, PASSWORD)
       VALUES (?, ?, ?)
     `,
+    upsertFacebookUser: `
+      INSERT INTO TB_USER_INFO (USER_NO, USER_EMAIL, USER_NAME, PICTURE, FACEBOOK, FACEBOOK_TOKEN, AUTH_YN)
+      VALUES (?, ?, ?, ?, ?, ?, 'Y')
+      ON DUPLICATE KEY UPDATE
+        USER_EMAIL = ?,
+        USER_NAME = ?,
+        PICTURE = ?,
+        FACEBOOK = ?,
+        FACEBOOK_TOKEN = ?,
+        AUTH_YN = 'Y'
+    `,
     insertFacebookUser: `
-      INSERT INTO TB_MEMBER (MBR_EMAIL, MBR_NAME, SOCIAL_VENDOR, PICTURE, SOCIAL_ID, TOKEN, AUTH_YN)
-      VALUES (?, ?, 'facebook', ?, ?, ?, 'Y')
+      INSERT INTO TB_USER_INFO (USER_EMAIL, USER_NAME, PICTURE, FACEBOOK, FACEBOOK_TOKEN, AUTH_YN)
+      VALUES (?, ?, ?, ?, ?, 'Y')
     `,
   },
 
   select: {
-    deserializeUser: `
-      SELECT * FROM TB_MEMBER
-      WHERE MBR_NB=?
+    selectUserByNo: `
+      SELECT * FROM TB_USER_INFO
+      WHERE USER_NO=?
     `,
-    localLogin: `
-      SELECT * FROM TB_MEMBER
-      WHERE MBR_EMAIL = ?
+    selectUserByEmail: `
+      SELECT * FROM TB_USER_INFO
+      WHERE USER_EMAIL = ?
     `,
-    facebookLoginCheck: `
-      SELECT * FROM TB_MEMBER
-      WHERE SOCIAL_VENDOR=? AND SOCIAL_ID=?
+    selectUserByFacebook: `
+      SELECT * FROM TB_USER_INFO
+      WHERE FACEBOOK=?
     `,
   },
 };

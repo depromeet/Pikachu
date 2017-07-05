@@ -1,8 +1,9 @@
+/* eslint-disable indent */
 import query from './auth.query';
 import queryUtil from '../utils/queryUtil';
 
-const deserializeUser = async (cond) => {
-  const result = await queryUtil.selectOne(query.select.deserializeUser, cond.mbrNb);
+const selectUserByNo = async (cond) => {
+  const result = await queryUtil.selectOne(query.select.selectUserByNo, cond.userNo);
   return result;
 };
 
@@ -15,28 +16,38 @@ const insertUser = async (data) => {
   return result;
 };
 
-const selectUser = async (cond) => {
-  const result = await queryUtil.selectOne(query.select.localLogin, cond.userEmail);
+const selectUserByEmail = async (cond) => {
+  const result = await queryUtil.selectOne(query.select.selectUserByEmail, cond.userEmail);
   return result;
 };
 
-const insertFacebookUser = async (data) => {
-  const result = await queryUtil.insert(
-                    query.insert.insertFacebookUser,
-                    [data.email, data.name, data.picture, data.authStr, data.token],
-                  );
+const upsertFacebookUser = async (data) => {
+  let executeQuery = '';
+  let param = '';
+
+  if (Object.keys(data).length === 5) {
+    executeQuery = query.insert.insertFacebookUser;
+    param = [data.email, data.name, data.picture, data.facebook, data.token];
+  } else {
+    executeQuery = query.insert.upsertFacebookUser;
+    param = [
+              data.no, data.email, data.name, data.picture, data.facebook, data.token,
+              data.email, data.name, data.picture, data.facebook, data.token,
+            ];
+  }
+  const result = await queryUtil.insert(executeQuery, param);
   return result;
 };
 
-const selectFacebookLoginUser = async (cond) => {
-  const result = await queryUtil.selectOne(query.select.facebookLoginCheck, [cond.vender, cond.id]);
+const selectFacebookLoginUser = async (data) => {
+  const result = await queryUtil.selectOne(query.select.selectUserByFacebook, data.cond.id);
   return result;
 };
 
 export default {
-  deserializeUser,
+  selectUserByNo,
   insertUser,
-  selectUser,
-  insertFacebookUser,
+  selectUserByEmail,
+  upsertFacebookUser,
   selectFacebookLoginUser,
 };

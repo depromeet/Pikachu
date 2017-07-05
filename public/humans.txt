@@ -1,15 +1,17 @@
 # humanstxt.org/
-# The humans responsible & technology colophon
+# 디프만 피카츄 팀
 
 # TEAM
 
   <name> -- <role> -- <twitter>
-
+  김현준 -- https://github.com/noeyhjun
+  임정택
+  양영일
 # THANKS
 
-  <name>
+  Depromeet
 
 # TECHNOLOGY COLOPHON
-
+  Redis
   CSS3, HTML5, JavaScript
   React Starter Kit -- https://reactstarter.com/
