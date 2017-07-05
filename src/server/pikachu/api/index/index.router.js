@@ -2,8 +2,14 @@ import { Router } /**/ from 'express';
 import jwt /*       */ from 'jsonwebtoken';
 import ctrl /*      */ from './index.ctrl';
 import config from '../../../config';
+import passportConf from '../../../common/passport';
 
 const router = new Router();
+
+router.get('/test', passportConf.isAuthenticated, passportConf.isAuthorized, (req, res) => {
+  console.info(req.user);
+  res.send('dasf');
+});
 
 router.post('/login', ctrl.postLogin, (req, res) => {
   const expiresIn = 60 * 60 * 24 * 180; // 180 days

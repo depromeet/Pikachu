@@ -21,7 +21,6 @@ import React from 'react';
 import ReactDOM from 'react-dom/server';
 import PrettyError from 'pretty-error';
 import passport from 'passport';
-import redis from 'redis';
 import session from 'express-session';
 import connectRedis from 'connect-redis';
 import flash from 'express-flash';
@@ -68,16 +67,15 @@ app.use(bodyParser.json());
 
 
 // http://inma.tistory.com/45
-// app.use(session({
-//   store: new RedisStore({
-//     host: config.redis.host,
-//     port: config.redis.port,
-//     secret: config.redis.secret,
-//   }),
-//   secret: config.redis.secret,
-//   resave: false,
-//   saveUninitialized: true,
-// }));
+app.use(session({
+  store: new RedisStore({
+    host: config.redis.host,
+    port: config.redis.port,
+  }),
+  secret: config.redis.secret,
+  resave: false,
+  saveUninitialized: true,
+}));
 
 app.use(expressValidator());
 
@@ -104,8 +102,7 @@ app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
 });
 
 app.use((req, res, next) => {
-  console.info('dasfadfadfasdf');
-  if (!req.user && req.path !== '/login' && req.path !== '/signup' && !req.path.match(/\./)) {
+  if (!req.user && req.path !== '/login' && req.path !== '/signup' && !req.path.match(/^\/auth/) && !req.path.match(/\./)) {
     req.session.returnTo = req.path;
   } else if (req.user && req.path === '/account') {
     req.session.returnTo = req.path;
@@ -136,7 +133,6 @@ app.use('/graphql', expressGraphQL(req => ({
 // Register server-side rendering middleware
 // -----------------------------------------------------------------------------
 app.get('*', async (req, res, next) => {
-  console.info('12321323');
   try {
     const css = new Set();
 
