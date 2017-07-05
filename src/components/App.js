@@ -55,7 +55,6 @@ class App extends React.PureComponent {
 
   constructor(props) {
     super(props);
-    console.info(props);
   }
 
   getChildContext() {

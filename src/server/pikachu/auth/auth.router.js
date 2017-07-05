@@ -13,16 +13,16 @@ router.get('/test', passportConf.isAuthenticated, passportConf.isAuthorized, (re
 });
 
 router.get('/facebook',
-  passport.authenticate('facebook', { scope: ['email', 'public_profile'], session: false }),
+  passport.authenticate('facebook', { scope: ['email', 'public_profile'] }),
 );
 
 router.get('/facebook/callback', /*
-         */ passport.authenticate('facebook', { failureRedirect: '/login', session: false }), /* 1차 미들 웨어
+         */ passport.authenticate('facebook', { failureRedirect: '/login' }), /* 1차 미들 웨어
          */ (req, res) => {
            const expiresIn = 60 * 60 * 24 * 180; // 180 days
            const token = jwt.sign(req.user, config.auth.jwt.secret, { expiresIn });
            res.cookie('id_token', token, { maxAge: 1000 * expiresIn, httpOnly: true });
-           res.redirect(req.query.returnTo || '/');
+           res.redirect(req.session.returnTo || '/');
          }); // 2차 미들웨어
 
 export default router;

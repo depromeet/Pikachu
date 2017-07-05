@@ -24,6 +24,7 @@ import passport from 'passport';
 import redis from 'redis';
 import session from 'express-session';
 import connectRedis from 'connect-redis';
+import flash from 'express-flash';
 
 // import flash from 'express-flash';
 import schema from './data/schema';
@@ -37,19 +38,16 @@ import models from './data/models';
 import assets from './assets.json'; // eslint-disable-line import/no-unresolved
 import configureStore from './store/configureStore';
 import { setRuntimeVariable } from './actions/runtime';
-import config from './config';
-import connection from './server/database/connection';
 import indexRouter from './server/pikachu/api/index';
 import authRouter from './server/pikachu/auth';
 import passConf from './server/common/passport';
-import serverConfig from './server/config';
+import config from './server/config';
 
 /**
  * Load environment variables from .env file, where API keys and passwords are configured.
  */
 
 const app = express();
-const redisClient = redis.createClient();
 const RedisStore = connectRedis(session);
 //
 // Tell any CSS tooling (such as Material UI) to use all vendor prefixes if the
@@ -68,34 +66,29 @@ app.use(logger('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+
 // http://inma.tistory.com/45
-app.use(session({
-  store: new RedisStore({
-    client: redisClient,
-    host: serverConfig.redis.host,
-    port: serverConfig.redis.port,
-  }),
-  secret: serverConfig.redis.secret,
-  resave: true,
-  saveUninitialized: true,
-}));
+// app.use(session({
+//   store: new RedisStore({
+//     host: config.redis.host,
+//     port: config.redis.port,
+//     secret: config.redis.secret,
+//   }),
+//   secret: config.redis.secret,
+//   resave: false,
+//   saveUninitialized: true,
+// }));
+
 app.use(expressValidator());
 
-app.get('/test', async (req, res) => {
-  try {
-    const result = await connection.query('SELECT NOW() as test' /* ,param(optional) */);
-    res.send(result);
-    // res.send(result);
-  } catch (e) {
-    res.send(e);
-  }
-});
-
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash());
 //
 // Authentication
 // -----------------------------------------------------------------------------
 app.use(expressJwt({
-  secret: serverConfig.auth.jwt.secret, // config.auth.jwt.secret,
+  secret: config.auth.jwt.secret, // config.auth.jwt.secret,
   credentialsRequired: false,
   getToken: req => req.cookies.id_token,
 }));
@@ -110,7 +103,16 @@ app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
   next(err);
 });
 
-app.use(passport.initialize());
+app.use((req, res, next) => {
+  console.info('dasfadfadfasdf');
+  if (!req.user && req.path !== '/login' && req.path !== '/signup' && !req.path.match(/\./)) {
+    req.session.returnTo = req.path;
+  } else if (req.user && req.path === '/account') {
+    req.session.returnTo = req.path;
+  }
+
+  next();
+});
 
 if (__DEV__) {
   app.enable('trust proxy');
@@ -134,6 +136,7 @@ app.use('/graphql', expressGraphQL(req => ({
 // Register server-side rendering middleware
 // -----------------------------------------------------------------------------
 app.get('*', async (req, res, next) => {
+  console.info('12321323');
   try {
     const css = new Set();
 
