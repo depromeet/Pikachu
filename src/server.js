@@ -162,7 +162,6 @@ app.get('*', async (req, res, next) => {
 
     const store = configureStore(initialState, { // 기본적인 유저에 대한 정보와 유저가 요청을 보내기 위한 fetch 함수를 저장한다
       fetch,
-      user: 123,
       // I should not use `history` on server.. but how I do redirection? follow universal-router
     });
 

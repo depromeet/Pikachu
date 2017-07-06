@@ -20,10 +20,6 @@ const ContextType = {
   // Integrate Redux
   // http://redux.js.org/docs/basics/UsageWithReact.html
   ...ReduxProvider.childContextTypes,
-  user: PropTypes.shape({
-    thumb: PropTypes.string,
-    email: PropTypes.string,
-  }),
 };
 
 /**

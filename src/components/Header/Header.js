@@ -18,7 +18,7 @@ class Header extends React.Component {
     return (
       <div className={s.root}>
         <div className={s.container}>
-          <Navigation user={this.props.user} />
+          <Navigation />
           <Link className={s.brand} to="/">
             <span className={s.brandTxt}>PIKA</span>
           </Link>
