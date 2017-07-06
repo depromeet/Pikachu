@@ -15,7 +15,8 @@ export default {
 
   path: '/',
 
-  async action({ fetch }) {
+  async action({ fetch, store }) {
+    console.info(store.getState());
     const resp = await fetch('/graphql', {
       body: JSON.stringify({
         query: '{news{title,link,content}}',

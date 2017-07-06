@@ -14,6 +14,9 @@ import Link from '../Link';
 import Navigation from '../Navigation';
 
 class Header extends React.Component {
+  componentWillMount() {
+    console.info('componentWillMount');
+  }
   render() {
     return (
       <div className={s.root}>

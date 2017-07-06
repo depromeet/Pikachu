@@ -138,7 +138,6 @@ Login.defaultProps = {
 
 Login.propTypes = {
   title: PropTypes.string.isRequired,
-  returnTo: PropTypes.string,
   actionPostLogin: PropTypes.func.isRequired,
   user: PropTypes.shape({
     name: PropTypes.string,

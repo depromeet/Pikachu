@@ -13,6 +13,10 @@ import s from './Navigation.css';
 import Link from '../Link';
 
 class Navigation extends React.Component {
+  componentWillMount() {
+    console.info('componentWillMount');
+  }
+
   render() {
     return (
       <div className={s.root} role="navigation">
