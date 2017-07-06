@@ -66,6 +66,7 @@ passport.use(new FacebookStrategy({
           done(null, {
             id: userLogin.userNo,
             email: userLogin.userEmail,
+            thumb: userLogin.picture,
           }); // catch 에서 받아서 처리
         } else {
           // 트랜잭션 처리가 필요할 수도 있겠다 싶음... 하나로 묶어서 다른방법으로 처리하는 걸 모색해 봐야됨..
@@ -85,6 +86,7 @@ passport.use(new FacebookStrategy({
           done(null, {
             id: user.userNo,
             email: user.userEmail,
+            thumb: user.picture,
           });
         }
       } else { // 요청정보에 유저에 대한 데이터가 없는경우 ..
@@ -98,6 +100,7 @@ passport.use(new FacebookStrategy({
           done(null, {
             id: userLogin.userNo,
             email: userLogin.userEmail,
+            thumb: userLogin.picture,
           });
         } else {
           const insertNo = await authDml.upsertFacebookUser({
@@ -115,6 +118,7 @@ passport.use(new FacebookStrategy({
           done(null, {
             id: user.userNo,
             email: user.userEmail,
+            thumb: user.picture,
           });
         }
       }

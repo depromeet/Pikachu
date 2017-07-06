@@ -41,7 +41,7 @@ const context = {
   store: configureStore(window.App.state, { history }),
   storeSubscription: null,
 };
-
+context.user = context.store.getState().user;
 // Switch off the native scroll restoration behavior and handle it manually
 // https://developers.google.com/web/updates/2015/09/history-api-scroll-restoration
 const scrollPositionsHistory = {};
@@ -132,7 +132,6 @@ async function onLocationChange(location, action) {
       history.replace(route.redirect);
       return;
     }
-
     appInstance = ReactDOM.render(
       <App context={context}>{route.component}</App>,
       container,

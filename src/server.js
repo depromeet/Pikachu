@@ -102,7 +102,8 @@ app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
 });
 
 app.use((req, res, next) => {
-  if (!req.user && req.path !== '/login' && req.path !== '/signup' && !req.path.match(/^\/auth/) && !req.path.match(/\./)) {
+  if (!req.user && req.path !== '/login' && req.path !== '/signup'
+      && !req.path.match(/^\/auth/)) {
     req.session.returnTo = req.path;
   } else if (req.user && req.path === '/account') {
     req.session.returnTo = req.path;

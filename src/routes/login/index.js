@@ -18,7 +18,6 @@ export default {
   path: '/login',
 
   action({ fetch }) {
-    console.info(fetch);
     return {
       title,
       component: <Layout><Login title={title} /></Layout>,

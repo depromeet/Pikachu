@@ -19,8 +19,6 @@ router.get('/facebook',
 router.get('/facebook/callback', /*
          */ passport.authenticate('facebook', { failureRedirect: '/login' }), /* 1차 미들 웨어
          */ (req, res) => {
-           console.info('sdfkladfldksfjklajfkldsflkj');
-           console.info(req.session);
            const expiresIn = 60 * 60 * 24 * 180; // 180 days
            const token = jwt.sign(req.user, config.auth.jwt.secret, { expiresIn });
            res.cookie('id_token', token, { maxAge: 1000 * expiresIn, httpOnly: true });
