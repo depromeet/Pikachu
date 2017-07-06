@@ -1,6 +1,7 @@
 export default {
   // Node.js app
   port: process.env.PORT || 3000,
+  sessionSecret: process.env.SESSION_SECRET,
   // API Gateway
   api: {
     // API URL to be used in the client-side code

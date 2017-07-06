@@ -47,7 +47,7 @@ import config from './server/config';
  */
 
 const app = express();
-const RedisStore = connectRedis(session);
+// const RedisStore = connectRedis(session); 개발모드일땐 잠시 해제
 //
 // Tell any CSS tooling (such as Material UI) to use all vendor prefixes if the
 // user agent is not known.
@@ -65,17 +65,32 @@ app.use(logger('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-
-// http://inma.tistory.com/45
-app.use(session({
-  store: new RedisStore({
-    host: config.redis.host,
-    port: config.redis.port,
-  }),
-  secret: config.redis.secret,
+const sessionOption = {
+  secret: config.sessionSecret,
   resave: false,
   saveUninitialized: true,
-}));
+};
+
+if (process.env.NODE_ENV !== 'development') {
+  const RedisStore = connectRedis(session);
+  sessionOption.store = new RedisStore({
+    host: config.redis.host,
+    port: config.redis.port,
+  });
+}
+
+app.use(session(sessionOption));
+
+// http://inma.tistory.com/45
+// app.use(session({ 개발모드..
+//   store: new RedisStore({
+//     host: config.redis.host,
+//     port: config.redis.port,
+//   }),
+//   secret: config.redis.secret,
+//   resave: false,
+//   saveUninitialized: true,
+// }));
 
 app.use(expressValidator());
 
