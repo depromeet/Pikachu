@@ -340,7 +340,7 @@ const serverConfig = {
     // https://webpack.github.io/docs/list-of-plugins.html#bannerplugin
     new webpack.BannerPlugin({
       banner: `require("source-map-support").install();
-               require("dotenv").load({ path: '.env.example' });`,
+               require("dotenv").load({ path: '.env' });`,
       raw: true,
       entryOnly: false,
     }),

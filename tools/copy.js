@@ -29,7 +29,7 @@ async function copy() {
       },
     }, null, 2)),
     copyFile('LICENSE.txt', 'build/LICENSE.txt'),
-    copyFile('.env.example', 'build/.env.example'),
+    copyFile('.env', 'build/.env'),
     copyDir('public', 'build/public'),
   ]);
 
