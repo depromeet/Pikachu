@@ -8,6 +8,7 @@
 - [시작하기(Getting Started)](#getting-started)
 - [설치 및 요구사항 - Prerequisites](#prerequisites)
 - [참고 자료]
+
 기능리스트 - Features
 =======================
 - **OAuth 2.0 Authentication** via Facebook, Google, Kakao
