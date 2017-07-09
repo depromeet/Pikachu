@@ -39,7 +39,8 @@ import configureStore from './store/configureStore';
 import { setRuntimeVariable } from './actions/runtime';
 import indexRouter from './server/api/routers/index';
 import authRouter from './server/api/routers/auth';
-// import { auth } from './server/api/routers'; //위에 두 문장을 어떻게 하면 하나로 합칠 수 있을까? router가 10개면 10줄의 소스가 생기니까... 고민..
+// import { auth } from './server/api/routers';
+// 위에 두 문장을 어떻게 하면 하나로 합칠 수 있을까? router가 10개면 10줄의 소스가 생기니까... 고민..
 import passConf from './server/middlewares/passport';
 import config from './server/config';
 
