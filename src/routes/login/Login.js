@@ -51,7 +51,7 @@ class Login extends React.Component {
             </a>
           </div>
           <div className={s.formGroup}>
-            <a className={s.google} href="/login/google">
+            <a className={s.google} href="/auth/google">
               <svg
                 className={s.icon}
                 width="30"
@@ -74,7 +74,7 @@ class Login extends React.Component {
             </a>
           </div>
           <div className={s.formGroup}>
-            <a className={s.kakao} href="/login/kakao">
+            <a className={s.kakao} href="/auth/kakao">
               <span>카카오톡으로 로그인</span>
             </a>
           </div>
