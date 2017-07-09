@@ -1,6 +1,9 @@
 /* eslint-disable global-require */
+import authRouter from './auth';
+import indexRouter from './index';
 
 export default {
-  auth: require('./auth').default,
-  index: require('./index').default,
+  auth: authRouter,
+  index: indexRouter,
 };
+

@@ -37,25 +37,24 @@ import models from './data/models';
 import assets from './assets.json'; // eslint-disable-line import/no-unresolved
 import configureStore from './store/configureStore';
 import { setRuntimeVariable } from './actions/runtime';
-import indexRouter from './server/api/routers/index';
-import authRouter from './server/api/routers/auth';
-// import { auth } from './server/api/routers';
+// import indexRouter from './server/api/routers/index';
+// import authRouter from './server/api/routers/auth';
+import r, { test } from './server/api/routers';
 // 위에 두 문장을 어떻게 하면 하나로 합칠 수 있을까? router가 10개면 10줄의 소스가 생기니까... 고민..
 import passConf from './server/middlewares/passport';
 import config from './server/config';
 
-/**
- * Load environment variables from .env file, where API keys and passwords are configured.
- */
-
 const app = express();
-// const RedisStore = connectRedis(session); 개발모드일땐 잠시 해제
+
+console.info(test);
+
 //
 // Tell any CSS tooling (such as Material UI) to use all vendor prefixes if the
 // user agent is not known.
 // -----------------------------------------------------------------------------
 global.navigator = global.navigator || {};
 global.navigator.userAgent = global.navigator.userAgent || 'all';
+
 // global.modelRequire = (modelName) => {
 //   console.info(modelNam
 //   return global.require(`./server/database/models/${modelName}`);
@@ -85,17 +84,6 @@ if (process.env.NODE_ENV !== 'development') {
 }
 
 app.use(session(sessionOption));
-
-// http://inma.tistory.com/45
-// app.use(session({ 개발모드..
-//   store: new RedisStore({
-//     host: config.redis.host,
-//     port: config.redis.port,
-//   }),
-//   secret: config.redis.secret,
-//   resave: false,
-//   saveUninitialized: true,
-// }));
 
 app.use(expressValidator());
 
@@ -137,8 +125,8 @@ if (__DEV__) {
 }
 
 // app.use('/', indexRouter);
-app.use('/auth', authRouter);
-app.use('/api/', indexRouter); // 권한이 필요없는 경우
+app.use('/auth', r.auth);
+app.use('/api/', r.index); // 권한이 필요없는 경우
 app.use('/sample', passConf.isAuthenticated, passConf.isAuthorized);
 //
 // Register API middleware
