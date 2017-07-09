@@ -2,7 +2,7 @@ import { Router } /**/ from 'express';
 import jwt /*       */ from 'jsonwebtoken';
 import ctrl /*      */ from './index.ctrl';
 import config from '../../../config';
-import passportConf from '../../../common/passport';
+import passportConf from '../../../middlewares/passport';
 
 const router = new Router();
 

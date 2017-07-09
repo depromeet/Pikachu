@@ -2,8 +2,8 @@ import { Router } /**/ from 'express';
 import passport /*  */ from 'passport';
 import jwt /*       */ from 'jsonwebtoken';
 
-import passportConf from '../../common/passport';
-import config from '../../config';
+import passportConf from '../../../middlewares/passport';
+import config from '../../../config';
 
 const router = new Router();
 

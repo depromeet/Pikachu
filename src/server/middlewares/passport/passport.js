@@ -1,10 +1,10 @@
-/* eslint-disable no-underscore-dangle, dot-notation */
-
 import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import { Strategy as FacebookStrategy } from 'passport-facebook';
-import authDml from '../auth';
+
 import config from '../../config';
+
+import userDml from '../../database/models/userInfo/userInfo.dml';
 
 passport.serializeUser((user, done) => {
   done(null, user.id);
@@ -13,7 +13,7 @@ passport.serializeUser((user, done) => {
 passport.deserializeUser(async (no, done) => {
   // findBy User
   try {
-    const user = authDml.selectUserByNo({
+    const user = userDml.selectUserByNo({
       userNo: no,
     });
 
@@ -23,9 +23,10 @@ passport.deserializeUser(async (no, done) => {
   }
 });
 
+
 passport.use(new LocalStrategy({ usernameField: 'email' }, async (email, password, done) => {
   try {
-    const user = authDml.selectUserByEmail({
+    const user = userDml.selectUserByEmail({
       userEmail: email,
     });
     //
@@ -56,7 +57,7 @@ passport.use(new FacebookStrategy({
   const fooBar = async () => {
     try {
       if (req.user) { // 요청 정보에 유저에 대한 데이터가 존재하는 경우
-        const userLogin = await authDml.selectFacebookLoginUser({
+        const userLogin = await userDml.selectFacebookLoginUser({
           cond: {
             id: profile.id,
           },
@@ -70,16 +71,16 @@ passport.use(new FacebookStrategy({
           }); // catch 에서 받아서 처리
         } else {
           // 트랜잭션 처리가 필요할 수도 있겠다 싶음... 하나로 묶어서 다른방법으로 처리하는 걸 모색해 봐야됨..
-          const insertNo = await authDml.upsertFacebookUser({
+          const insertNo = await userDml.upsertFacebookUser({
             no: req.user.id,
-            email: profile._json.email,
+            email: profile._json.email, // eslint-disable-line no-underscore-dangle
             name: profile.displayName,
             picture: `https://graph.facebook.com/${profile.id}/picture?type=large`,
             facebook: profile.id,
             token: accessToken,
           });
 
-          const user = await authDml.selectUserByNo({
+          const user = await userDml.selectUserByNo({
             userNo: insertNo,
           });
 
@@ -90,7 +91,7 @@ passport.use(new FacebookStrategy({
           });
         }
       } else { // 요청정보에 유저에 대한 데이터가 없는경우 ..
-        const userLogin = await authDml.selectFacebookLoginUser({
+        const userLogin = await userDml.selectFacebookLoginUser({
           cond: {
             id: profile.id,
           },
@@ -103,15 +104,15 @@ passport.use(new FacebookStrategy({
             thumb: userLogin.picture,
           });
         } else {
-          const insertNo = await authDml.upsertFacebookUser({
-            email: profile._json.email,
+          const insertNo = await userDml.upsertFacebookUser({
+            email: profile._json.email, // eslint-disable-line no-underscore-dangle
             name: profile.displayName,
             picture: `https://graph.facebook.com/${profile.id}/picture?type=large`,
             token: accessToken,
             facebook: profile.id,
           });
 
-          const user = await authDml.selectUserByNo({
+          const user = await userDml.selectUserByNo({
             userNo: insertNo,
           });
 
@@ -130,6 +131,7 @@ passport.use(new FacebookStrategy({
   fooBar().catch(done);
 }));
 
+
 /**
  * Login Required middleware.
  */
@@ -145,7 +147,7 @@ const isAuthenticated = (req, res, next) => {
  */
 const isAuthorized = (req, res, next) => {
   const provider = req.path.split('/').slice(-1)[0];
-  const token = req.cookies['id_token'];
+  const token = req.cookies['id_token']; // eslint-disable-line dot-notation
   if (token) {
     next();
   } else {

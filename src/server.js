@@ -37,9 +37,10 @@ import models from './data/models';
 import assets from './assets.json'; // eslint-disable-line import/no-unresolved
 import configureStore from './store/configureStore';
 import { setRuntimeVariable } from './actions/runtime';
-import indexRouter from './server/pikachu/api/index';
-import authRouter from './server/pikachu/auth';
-import passConf from './server/common/passport';
+import indexRouter from './server/api/routers/index';
+import authRouter from './server/api/routers/auth';
+// import { index as indexRouter, auth as authRouter } from './server/api/routers';
+import passConf from './server/middlewares/passport';
 import config from './server/config';
 
 /**
@@ -54,7 +55,10 @@ const app = express();
 // -----------------------------------------------------------------------------
 global.navigator = global.navigator || {};
 global.navigator.userAgent = global.navigator.userAgent || 'all';
-
+// global.modelRequire = (modelName) => {
+//   console.info(modelNam
+//   return global.require(`./server/database/models/${modelName}`);
+// };
 //
 // Register Node.js middleware
 // -----------------------------------------------------------------------------
@@ -117,7 +121,7 @@ app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
 });
 
 app.use((req, res, next) => {
-  if (!req.user && req.path !== '/login' && req.path !== '/signup'
+  if (!req.user && req.path !== '/login' && req.path !== '/signup' && req.path !== '/graphql'
       && !req.path.match(/^\/auth/)) {
     req.session.returnTo = req.path;
   } else if (req.user && req.path === '/account') {
