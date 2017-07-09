@@ -1,9 +1,6 @@
-const routers = [
-  'auth',
-  'index',
-  'user',
-];
+/* eslint-disable global-require */
 
-routers.forEach((router) => {
-  module[router] = require(`./${router}`); // eslint-disable-line global-require, no-dynamic-require
-});
+export default {
+  auth: require('./auth').default,
+  index: require('./index').default,
+};

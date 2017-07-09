@@ -14,7 +14,7 @@ export default {
 
   path: '/',
 
-  // Keep in mind, routes are evaluated in order
+  // Keep in mind, routes are evaluated in order'
   children: [
     require('./home').default,
     require('./contact').default,
