@@ -30,4 +30,13 @@ router.get('/google/callback', passport.authenticate('google', { failureRedirect
   res.cookie('id_token', token, { maxAge: 1000 * expiresIn, httpOnly: true });
   res.redirect(req.session.returnTo || '/');
 });
+
+router.get('/kakao', passport.authenticate('kakao'));
+
+router.get('/kakao/callback', passport.authenticate('kakao', { failureRedirect: '/login' }), (req, res) => {
+  const expiresIn = 60 * 60 * 24 * 180; // 180 days
+  const token = jwt.sign(req.user, config.auth.jwt.secret, { expiresIn });
+  res.cookie('id_token', token, { maxAge: 1000 * expiresIn, httpOnly: true });
+  res.redirect(req.session.returnTo || '/');
+});
 export default router;

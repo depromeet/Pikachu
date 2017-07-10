@@ -3,6 +3,7 @@ import passport from 'passport';
 import local from './local';
 import facebook from './facebook';
 import google from './google';
+import kakao from './kakao';
 import userDml from '../../database/models/userInfo/userInfo.dml';
 
 passport.serializeUser((user, done) => {
@@ -26,6 +27,7 @@ passport.deserializeUser(async (no, done) => {
 passport.use(local);
 passport.use(facebook);
 passport.use(google);
+passport.use(kakao);
 
 
 /**
