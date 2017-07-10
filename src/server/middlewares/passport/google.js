@@ -63,7 +63,6 @@ export default new GoogleStrategy({
         } else {
           const insertNo = await userDml.upsertSocialUser({
             socialName: 'GOOGLE',
-            no: req.user.id,
             email: profile.emails[0].value,
             name: profile.displayName,
             picture: profile._json.image.url, // eslint-disable-line no-underscore-dangle

@@ -63,7 +63,6 @@ export default new KakaoStrategy({
         } else {
           const insertNo = await userDml.upsertSocialUser({
             socialName: 'KAKAO',
-            no: req.user.id,
             email: profile._json.kaccount_email, // eslint-disable-line no-underscore-dangle
             name: profile.displayName,
             picture: profile._json.profile_image, // eslint-disable-line no-underscore-dangle
