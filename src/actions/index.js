@@ -14,25 +14,15 @@ export function setRuntimeVariable({ name, value }) {
 export function actionPostLogin(user) {
   // https://www.npmjs.com/package/request
 
+  return async (dispatch, getState, { history }) => {
+    console.info(history);
+    console.info(getState());
 
-  return {
-    type: POST_REQUEST_LOGIN,
-    payload: {
-      user,
-    },
+    dispatch({
+      type: POST_REQUEST_LOGIN,
+      payload: {
+        user,
+      },
+    });
   };
-
-  // return axios.post({
-  //   methos: 'post',
-  //   url: 'api/login',
-  //   data: user,
-  // }).then((res) => {
-  //   console.info(res);
-  //   return {
-  //     type: POST_REQUEST_LOGIN,
-  //     payload: {
-  //       user,
-  //     },
-  //   };
-  // });
 }

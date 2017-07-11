@@ -1,4 +1,4 @@
-/* eslint-disable object-shorthand */
+/* eslint-disable object-shorthand, func-names */
 
 import connection from './connection'; // connection에 대한 정보가 변경이 되면 계속 이걸 모든 파일에서 바꿔줘야되는데.. 효율적인 방법을 찾아야 할듯..
 

@@ -1,7 +1,7 @@
 import mysql from 'mysql';
 import winstron from 'winston';
 
-import u from '../../utils/util';
+import u from '../utils/util';
 
 const pool = mysql.createPool({
   host: process.env.DATABASE_HOST,

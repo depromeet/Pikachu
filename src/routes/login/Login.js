@@ -51,7 +51,7 @@ class Login extends React.Component {
             </a>
           </div>
           <div className={s.formGroup}>
-            <a className={s.google} href="/login/google">
+            <a className={s.google} href="/auth/google">
               <svg
                 className={s.icon}
                 width="30"
@@ -74,7 +74,7 @@ class Login extends React.Component {
             </a>
           </div>
           <div className={s.formGroup}>
-            <a className={s.kakao} href="/login/kakao">
+            <a className={s.kakao} href="/auth/kakao">
               <span>카카오톡으로 로그인</span>
             </a>
           </div>
@@ -125,8 +125,12 @@ const mapState = state => ({
   payload: state.payload,
 });
 
-const mapDispatch = {
-  actionPostLogin,
+const mapDispatch = (dispatch) => { // eslint-disable-line arrow-body-style
+  return {
+    actionPostLogin: (user) => {
+      dispatch(actionPostLogin(user));
+    },
+  };
 };
 
 Login.defaultProps = {
@@ -139,9 +143,6 @@ Login.defaultProps = {
 Login.propTypes = {
   title: PropTypes.string.isRequired,
   actionPostLogin: PropTypes.func.isRequired,
-  user: PropTypes.shape({
-    name: PropTypes.string,
-    password: PropTypes.string,
-  }),
+  user: PropTypes.object, // eslint-disable-line react/forbid-prop-types
 };
 export default connect(mapState, mapDispatch)(withStyles(s)(Login));

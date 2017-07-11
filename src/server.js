@@ -13,7 +13,6 @@ import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import expressJwt, { UnauthorizedError as Jwt401Error } from 'express-jwt';
 import expressValidator from 'express-validator';
-import expressGraphQL from 'express-graphql';
 import errorHandler from 'errorhandler';
 // import jwt from 'jsonwebtoken';
 import logger from 'morgan';
@@ -26,14 +25,12 @@ import connectRedis from 'connect-redis';
 import flash from 'express-flash';
 
 // import flash from 'express-flash';
-import schema from './data/schema';
 import App from './components/App';
 import Html from './components/Html';
 import { ErrorPageWithoutStyle } from './routes/error/ErrorPage';
 import errorPageStyle from './routes/error/ErrorPage.css';
 import createFetch from './createFetch';
 import router from './router';
-import models from './data/models';
 import assets from './assets.json'; // eslint-disable-line import/no-unresolved
 import configureStore from './store/configureStore';
 import { setRuntimeVariable } from './actions/runtime';
@@ -75,6 +72,7 @@ const sessionOption = {
   saveUninitialized: true,
 };
 
+// http://inma.tistory.com/45
 if (process.env.NODE_ENV !== 'development') {
   const RedisStore = connectRedis(session);
   sessionOption.store = new RedisStore({
@@ -131,12 +129,6 @@ app.use('/sample', passConf.isAuthenticated, passConf.isAuthorized);
 //
 // Register API middleware
 // -----------------------------------------------------------------------------
-app.use('/graphql', expressGraphQL(req => ({
-  schema,
-  graphiql: __DEV__,
-  rootValue: { request: req },
-  pretty: __DEV__,
-})));
 
 //
 // Register server-side rendering middleware
@@ -245,8 +237,7 @@ app.use(errorHandler());
 //
 // Launch the server
 // -----------------------------------------------------------------------------
-models.sync().catch(err => console.error(err.stack)).then(() => {
-  app.listen(config.port, () => {
-    console.info(`The server is running at http://localhost:${config.port}/`);
-  });
+
+app.listen(config.port, () => {
+  console.info(`The server is running at http://localhost:${config.port}/`);
 });
