@@ -22,4 +22,4 @@ export default new LocalStrategy({ usernameField: 'email' }, async (email, passw
   } catch (e) {
     return done(e);
   }
-})
+});

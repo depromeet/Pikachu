@@ -7,7 +7,6 @@ export default new KakaoStrategy({
   callbackURL: '/auth/kakao/callback',
   passReqToCallback: true,
 }, (req, accessToken, refreshToken, profile, done) => {
-  console.info(profile);
   const fooBar = async () => {
     try {
       if (req.user) { // 요청 정보에 유저에 대한 데이터가 존재하는 경우
@@ -31,7 +30,7 @@ export default new KakaoStrategy({
             no: req.user.id,
             email: profile._json.kaccount_email, // eslint-disable-line no-underscore-dangle
             name: profile.displayName,
-            picture: profile._json.profile_image, // eslint-disable-line no-underscore-dangle
+            picture: profile._json.properties.profile_image, // eslint-disable-line no-underscore-dangle
             socialId: profile.id,
             token: accessToken,
           });
@@ -65,7 +64,7 @@ export default new KakaoStrategy({
             socialName: 'KAKAO',
             email: profile._json.kaccount_email, // eslint-disable-line no-underscore-dangle
             name: profile.displayName,
-            picture: profile._json.profile_image, // eslint-disable-line no-underscore-dangle
+            picture: profile._json.properties.profile_image, // eslint-disable-line no-underscore-dangle
             socialId: profile.id,
             token: accessToken,
           });

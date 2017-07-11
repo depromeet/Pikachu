@@ -9,12 +9,15 @@ export default function index(state = {}, action) {
         const result = JSON.parse(body);
 
         if (!result.success) {
-          return alert(result.msg);
+          return alert(result.msg); // eslint-disable-line no-alert
         }
 
         return localStorage.setItem('token', result.token);
       });
-
+      console.info({
+        ...state,
+        [action.payload.name]: action.payload.value,
+      });
       return {
         ...state,
         [action.payload.name]: action.payload.value,

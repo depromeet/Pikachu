@@ -84,4 +84,4 @@ export default new FacebookStrategy({
   };
 
   fooBar().catch(done);
-})
+});

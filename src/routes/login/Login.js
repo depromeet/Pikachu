@@ -125,8 +125,12 @@ const mapState = state => ({
   payload: state.payload,
 });
 
-const mapDispatch = {
-  actionPostLogin,
+const mapDispatch = (dispatch) => { // eslint-disable-line arrow-body-style
+  return {
+    actionPostLogin: (user) => {
+      dispatch(actionPostLogin(user));
+    },
+  };
 };
 
 Login.defaultProps = {
@@ -139,9 +143,6 @@ Login.defaultProps = {
 Login.propTypes = {
   title: PropTypes.string.isRequired,
   actionPostLogin: PropTypes.func.isRequired,
-  user: PropTypes.shape({
-    name: PropTypes.string,
-    password: PropTypes.string,
-  }),
+  user: PropTypes.object, // eslint-disable-line react/forbid-prop-types
 };
 export default connect(mapState, mapDispatch)(withStyles(s)(Login));
