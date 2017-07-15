@@ -34,9 +34,8 @@ import router from './router';
 import assets from './assets.json'; // eslint-disable-line import/no-unresolved
 import configureStore from './store/configureStore';
 import { setRuntimeVariable } from './actions/runtime';
-// import indexRouter from './server/api/routers/index';
-// import authRouter from './server/api/routers/auth';
 import r, { test } from './server/api/routers';
+
 // 위에 두 문장을 어떻게 하면 하나로 합칠 수 있을까? router가 10개면 10줄의 소스가 생기니까... 고민..
 import passConf from './server/middlewares/passport';
 import config from './server/config';
@@ -126,6 +125,7 @@ if (__DEV__) {
 app.use('/auth', r.auth);
 app.use('/api/', r.index); // 권한이 필요없는 경우
 app.use('/sample', passConf.isAuthenticated, passConf.isAuthorized);
+app.use('/meet', r.meetRouter);
 //
 // Register API middleware
 // -----------------------------------------------------------------------------
@@ -149,7 +149,8 @@ app.get('*', async (req, res, next) => {
       fetch,
       // I should not use `history` on server.. but how I do redirection? follow universal-router
     });
-
+    console.info('server153');
+    console.info(store);
     store.dispatch(setRuntimeVariable({ // 실행 시간에 대한 정보를 담고 있는 state action
       name: 'initialNow',
       value: Date.now(),

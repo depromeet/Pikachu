@@ -16,7 +16,10 @@ export function actionPostLogin(user) {
 
   return async (dispatch, getState, { history }) => {
     console.info(history);
+<<<<<<< HEAD
     console.info(getState());
+=======
+>>>>>>> hj
 
     dispatch({
       type: POST_REQUEST_LOGIN,

@@ -3328,6 +3328,13 @@ gonzales-pe@^4.0.3:
   dependencies:
     minimist "1.1.x"
 
+google-maps-react@^1.0.19:
+  version "1.0.19"
+  resolved "https://registry.yarnpkg.com/google-maps-react/-/google-maps-react-1.0.19.tgz#4ac6e337d7e2c28235e8890e4fa611fba7d00eaf"
+  dependencies:
+    history "^3.0.0"
+    invariant "^2.2.1"
+
 graceful-fs@^3.0.2, graceful-fs@^3.0.4:
   version "3.0.11"
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-3.0.11.tgz#7613c778a1afea62f25c630a086d7f3acbbdd818"
@@ -3444,6 +3451,15 @@ hawk@~3.1.3:
     cryptiles "2.x.x"
     hoek "2.x.x"
     sntp "1.x.x"
+
+history@^3.0.0:
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/history/-/history-3.3.0.tgz#fcedcce8f12975371545d735461033579a6dae9c"
+  dependencies:
+    invariant "^2.2.1"
+    loose-envify "^1.2.0"
+    query-string "^4.2.2"
+    warning "^3.0.0"
 
 history@^4.6.1:
   version "4.6.1"
@@ -4184,6 +4200,10 @@ listr@^0.12.0:
     rxjs "^5.0.0-beta.11"
     stream-to-observable "^0.1.0"
     strip-ansi "^3.0.1"
+
+little-loader@~0.1.0:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/little-loader/-/little-loader-0.1.1.tgz#516207701524e795feafa8e64cfc6881af39503f"
 
 load-json-file@^1.0.0:
   version "1.1.0"
@@ -5956,7 +5976,7 @@ qs@~6.3.0:
   version "6.3.2"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.3.2.tgz#e75bd5f6e268122a2a0e0bda630b2550c166502c"
 
-query-string@^4.1.0, query-string@^4.3.4:
+query-string@^4.1.0, query-string@^4.2.2, query-string@^4.3.4:
   version "4.3.4"
   resolved "https://registry.yarnpkg.com/query-string/-/query-string-4.3.4.tgz#bbb693b9ca915c232515b228b1a02b609043dbeb"
   dependencies:
@@ -6030,6 +6050,16 @@ react-dom@^15.5.4:
     loose-envify "^1.1.0"
     object-assign "^4.1.0"
     prop-types "~15.5.7"
+
+react-google-map@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/react-google-map/-/react-google-map-3.0.1.tgz#3229c35e5d93fd35d2490aadde33606ff6c94771"
+
+react-google-maps-loader@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/react-google-maps-loader/-/react-google-maps-loader-3.0.1.tgz#2bbf58c9578d3fefb3b118d25ce0631bab9715d2"
+  dependencies:
+    little-loader "~0.1.0"
 
 react-hot-loader@^3.0.0-beta.6:
   version "3.0.0-beta.7"
