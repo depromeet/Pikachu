@@ -2,8 +2,8 @@
 import query from './userInfo.query';
 import queryExcute from '../../queryExcute';
 
-const selectUserByNo = async (cond) => {
-  const result = await queryExcute.selectOne(query.select.selectUserByNo, cond.userNo);
+const selectUserByNo = async (data) => {
+  const result = await queryExcute.selectOne(query.select.selectUserByNo, data.cond.userNo);
   return result;
 };
 

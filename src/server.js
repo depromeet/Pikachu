@@ -125,7 +125,7 @@ if (__DEV__) {
 app.use('/auth', r.auth);
 app.use('/api/', r.index); // 권한이 필요없는 경우
 app.use('/sample', passConf.isAuthenticated, passConf.isAuthorized);
-app.use('/meet', r.meet);
+app.use('/meet', passConf.isAuthenticated, passConf.isAuthorized, r.meet);
 //
 // Register API middleware
 // -----------------------------------------------------------------------------

@@ -4,7 +4,7 @@ import connection from './connection'; // connection에 대한 정보가 변경�
 
 export default {
   selectOne: async function (queryString, param) {
-    const list = await this.selectList(queryString, param);
+    const list = await this.executeQuery(queryString, param);
     return list['0'];
   },
 
