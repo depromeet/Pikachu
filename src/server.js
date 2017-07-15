@@ -108,7 +108,7 @@ app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
 
 app.use((req, res, next) => {
   if (!req.user && req.path !== '/login' && req.path !== '/signup' && req.path !== '/graphql'
-      && !req.path.match(/^\/auth/)) {
+      && !req.path.match(/^\/auth/g)) {
     req.session.returnTo = req.path;
   } else if (req.user && req.path === '/account') {
     req.session.returnTo = req.path;
@@ -125,7 +125,7 @@ if (__DEV__) {
 app.use('/auth', r.auth);
 app.use('/api/', r.index); // 권한이 필요없는 경우
 app.use('/sample', passConf.isAuthenticated, passConf.isAuthorized);
-app.use('/meet', passConf.isAuthenticated, passConf.isAuthorized, r.meet);
+app.use('/meet', /* id_token 검증 로직 필요 */ r.meet);
 //
 // Register API middleware
 // -----------------------------------------------------------------------------
@@ -149,8 +149,7 @@ app.get('*', async (req, res, next) => {
       fetch,
       // I should not use `history` on server.. but how I do redirection? follow universal-router
     });
-    console.info('server153');
-    console.info(store);
+
     store.dispatch(setRuntimeVariable({ // 실행 시간에 대한 정보를 담고 있는 state action
       name: 'initialNow',
       value: Date.now(),
