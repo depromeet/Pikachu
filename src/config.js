@@ -33,7 +33,9 @@ module.exports = {
     // https://analytics.google.com/
     googleTrackingId: process.env.GOOGLE_TRACKING_ID, // UA-XXXXX-X
   },
-
+  google: {
+    map: process.env.GOOGLE_MAP_API_KEY,
+  },
   // Authentication
   auth: {
     jwt: { secret: process.env.JWT_SECRET || 'depromeet' },

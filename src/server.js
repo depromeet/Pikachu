@@ -36,6 +36,7 @@ import configureStore from './store/configureStore';
 import { setRuntimeVariable } from './actions/runtime';
 import indexRouter from './server/api/routers/index';
 import authRouter from './server/api/routers/auth';
+import meetRouter from './server/api/routers/meet';
 // import { auth } from './server/api/routers';
 // 위에 두 문장을 어떻게 하면 하나로 합칠 수 있을까? router가 10개면 10줄의 소스가 생기니까... 고민..
 import passConf from './server/middlewares/passport';
@@ -127,6 +128,7 @@ if (__DEV__) {
 app.use('/auth', authRouter);
 app.use('/api/', indexRouter); // 권한이 필요없는 경우
 app.use('/sample', passConf.isAuthenticated, passConf.isAuthorized);
+app.use('/meet', meetRouter);
 //
 // Register API middleware
 // -----------------------------------------------------------------------------
