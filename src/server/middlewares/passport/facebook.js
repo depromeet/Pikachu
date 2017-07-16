@@ -36,7 +36,9 @@ export default new FacebookStrategy({
           });
 
           const user = await userDml.selectUserByNo({
-            userNo: insertNo,
+            cond: {
+              userNo: insertNo,
+            }
           });
 
           done(null, {
@@ -68,7 +70,9 @@ export default new FacebookStrategy({
           });
 
           const user = await userDml.selectUserByNo({
-            userNo: insertNo,
+            cond: {
+              userNo: insertNo,
+            }
           });
 
           done(null, {

@@ -125,12 +125,8 @@ const mapState = state => ({
   payload: state.payload,
 });
 
-const mapDispatch = (dispatch) => { // eslint-disable-line arrow-body-style
-  return {
-    actionPostLogin: (user) => {
-      dispatch(actionPostLogin(user));
-    },
-  };
+const mapDispatch = {
+  actionPostLogin,
 };
 
 Login.defaultProps = {

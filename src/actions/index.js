@@ -1,6 +1,9 @@
 /* eslint-disable import/prefer-default-export */
 
-import { POST_REQUEST_LOGIN } from '../constants';
+import {
+  POST_REQUEST_LOGIN,
+
+} from '../constants';
 
 export function setRuntimeVariable({ name, value }) {
   return {
@@ -14,9 +17,7 @@ export function setRuntimeVariable({ name, value }) {
 export function actionPostLogin(user) {
   // https://www.npmjs.com/package/request
 
-  return async (dispatch, getState, { history }) => {
-    console.info(history);
-
+  return async (dispatch) => {
     dispatch({
       type: POST_REQUEST_LOGIN,
       payload: {

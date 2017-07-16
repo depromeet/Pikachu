@@ -14,7 +14,8 @@ import Layout from '../../components/Layout';
 export default {
 
   path: '/',
-  async action() {
+  async action({store}) {
+    console.info(store.getState().user);
     const data = {
       news: [],
     };
