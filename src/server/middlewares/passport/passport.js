@@ -16,7 +16,7 @@ passport.deserializeUser(async (no, done) => {
     const user = userDml.selectUserByNo({
       cond: {
         userNo: no,
-      }
+      },
     });
 
     done(null, user);

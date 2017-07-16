@@ -10,7 +10,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import { actionPostLogin } from '../../actions/index';
 import s from './Navigation.css';
 import Link from '../Link';
 
@@ -19,12 +18,11 @@ class Navigation extends React.Component {
     thumbnail: '//s-media-cache-ak0.pinimg.com/736x/76/47/9d/76479dd91dc55c2768ddccfc30a4fbf5--pikachu-halloween-costume-diy-halloween-costumes.jpg',
   }
 
-  componentWillMount(){
-    console.log(this.props.user);
+  componentWillMount() {
     // ㅇ유저 정보가 store에 존재할 경우
-    if(this.props.user) {
+    if (this.props.user) { // eslint-disable-line react/prop-types
       this.setState({
-        thumbnail: this.props.user.thumb || this.state.thumbnail,
+        thumbnail: this.props.user.thumb || this.state.thumbnail, // eslint-disable-line react/prop-types, max-len
       });
     }
   }
@@ -33,7 +31,7 @@ class Navigation extends React.Component {
     return (
       <div className={s.root} role="navigation">
         <Link className={s.link} to="/login">Log in</Link>
-        <img className={s.thumb} src={ this.state.thumbnail } alt={'thumbnail'} />
+        <img className={s.thumb} src={this.state.thumbnail} alt={'thumbnail'} />
       </div>
     );
   }
@@ -42,10 +40,8 @@ const mapState = state => ({
   user: state.user,
 });
 
-const mapDispatch = (dispatch) => { // eslint-disable-line arrow-body-style
-  return {
+const mapDispatch = {
 
-  };
 };
 
 export default connect(mapState, mapDispatch)(withStyles(s)(Navigation));

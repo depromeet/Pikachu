@@ -14,14 +14,13 @@ import Layout from '../../components/Layout';
 export default {
 
   path: '/',
-  async action({store}) {
-    console.info(store.getState().user);
+  async action() {
     const data = {
       news: [],
     };
 
     return {
-      title: 'React Starter Kit',
+      title: '피카피카',
       component: <Layout><Home news={data.news} /></Layout>,
     };
   },

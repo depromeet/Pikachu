@@ -14,7 +14,7 @@ export default function index(state = {}, action) {
 
         return localStorage.setItem('token', result.token);
       });
-      
+
       return {
         ...state,
         [action.payload.name]: action.payload.value,
