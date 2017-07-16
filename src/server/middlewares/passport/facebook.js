@@ -12,8 +12,9 @@ export default new FacebookStrategy({
   const fooBar = async () => {
     try {
       if (req.user) { // 요청 정보에 유저에 대한 데이터가 존재하는 경우
-        const userLogin = await userDml.selectFacebookLoginUser({
+        const userLogin = await userDml.selectBySocialLoginUser({
           cond: {
+            socialName: 'facebook',
             id: profile.id,
           },
         });
@@ -26,7 +27,8 @@ export default new FacebookStrategy({
           }); // catch 에서 받아서 처리
         } else {
           // 트랜잭션 처리가 필요할 수도 있겠다 싶음... 하나로 묶어서 다른방법으로 처리하는 걸 모색해 봐야됨..
-          const insertNo = await userDml.upsertFacebookUser({
+          const insertNo = await userDml.upsertSocialUser({
+            socialName: 'facebook',
             no: req.user.id,
             email: profile._json.email, // eslint-disable-line no-underscore-dangle
             name: profile.displayName,
@@ -38,7 +40,7 @@ export default new FacebookStrategy({
           const user = await userDml.selectUserByNo({
             cond: {
               userNo: insertNo,
-            }
+            },
           });
 
           done(null, {
@@ -48,8 +50,9 @@ export default new FacebookStrategy({
           });
         }
       } else { // 요청정보에 유저에 대한 데이터가 없는경우 ..
-        const userLogin = await userDml.selectFacebookLoginUser({
+        const userLogin = await userDml.selectBySocialLoginUser({
           cond: {
+            socialName: 'facebook',
             id: profile.id,
           },
         });
@@ -61,7 +64,8 @@ export default new FacebookStrategy({
             thumb: userLogin.picture,
           });
         } else {
-          const insertNo = await userDml.upsertFacebookUser({
+          const insertNo = await userDml.upsertSocialUser({
+            socialName: 'facebook',
             email: profile._json.email, // eslint-disable-line no-underscore-dangle
             name: profile.displayName,
             picture: `https://graph.facebook.com/${profile.id}/picture?type=large`,
@@ -72,7 +76,7 @@ export default new FacebookStrategy({
           const user = await userDml.selectUserByNo({
             cond: {
               userNo: insertNo,
-            }
+            },
           });
 
           done(null, {

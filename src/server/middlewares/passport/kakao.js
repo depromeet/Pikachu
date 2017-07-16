@@ -30,7 +30,7 @@ export default new KakaoStrategy({
             no: req.user.id,
             email: profile._json.kaccount_email, // eslint-disable-line no-underscore-dangle
             name: profile.displayName,
-            picture: profile._json.properties.profile_image, // eslint-disable-line no-underscore-dangle
+            picture: profile._json.properties.profile_image, // eslint-disable-line no-underscore-dangle, max-len
             socialId: profile.id,
             token: accessToken,
           });
@@ -38,7 +38,7 @@ export default new KakaoStrategy({
           const user = await userDml.selectUserByNo({
             cond: {
               userNo: insertNo,
-            }
+            },
           });
 
           done(null, {
@@ -66,7 +66,7 @@ export default new KakaoStrategy({
             socialName: 'KAKAO',
             email: profile._json.kaccount_email, // eslint-disable-line no-underscore-dangle
             name: profile.displayName,
-            picture: profile._json.properties.profile_image, // eslint-disable-line no-underscore-dangle
+            picture: profile._json.properties.profile_image, // eslint-disable-line no-underscore-dangle, max-len
             socialId: profile.id,
             token: accessToken,
           });
@@ -74,7 +74,7 @@ export default new KakaoStrategy({
           const user = await userDml.selectUserByNo({
             cond: {
               userNo: insertNo,
-            }
+            },
           });
 
           done(null, {
