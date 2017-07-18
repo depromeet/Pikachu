@@ -9,7 +9,7 @@
 
 .root {
   float: right;
-  margin: 6px 0 0;
+  margin: 2px 0 0;
 }
 
 .link {
@@ -22,14 +22,15 @@
 .link,
 .link:active,
 .link:visited {
-  color: rgba(255, 255, 255, 1);
+  color: rgba(29, 29, 29, 1);
 }
 
 .link:hover {
-  color: rgba(255, 255, 255, 1);
+  color: rgba(29, 29, 29, 1);
 }
 
 .thumb {
-  width:35px;
-  height:35px;
+  width:34px;
+  height:34px;
+  border-radius:100%;
 }

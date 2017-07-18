@@ -23,5 +23,4 @@ export default {
       component: <Layout><Login title={title} /></Layout>,
     };
   },
-
 };

@@ -1,11 +1,4 @@
-/**
- * React Starter Kit (https://www.reactstarterkit.com/)
- *
- * Copyright © 2014-present Kriasoft, LLC. All rights reserved.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE.txt file in the root directory of this source tree.
- */
+/* eslint-disable react/prop-types */
 
 import React from 'react';
 import { connect } from 'react-redux';
@@ -28,9 +21,17 @@ class Navigation extends React.Component {
   }
 
   render() {
+    const createLoginComponent = () => {
+      if (this.props.user) {
+        return <Link className={s.link} to="/logout">Logout</Link>;
+      } else { // eslint-disable-line no-else-return
+        return <Link className={s.link} to="/login">Log in</Link>;
+      }
+    };
+
     return (
       <div className={s.root} role="navigation">
-        <Link className={s.link} to="/login">Log in</Link>
+        { createLoginComponent() }
         <img className={s.thumb} src={this.state.thumbnail} alt={'thumbnail'} />
       </div>
     );

@@ -1,9 +1,9 @@
 import meetDML from './meet.dml';
 
 const getOpenMeetList = async (req, res) => {
-  console.info(req.user);
   if (!req.user) {
     res.send({
+      success: false,
       error: 'please login',
       code: 405,
     });

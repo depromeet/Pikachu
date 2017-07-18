@@ -103,6 +103,7 @@ app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
     // `clearCookie`, otherwise user can't use web-app until cookie expires
     res.clearCookie('id_token');
   }
+
   next(err);
 });
 
@@ -182,6 +183,8 @@ app.get('*', async (req, res, next) => {
     }
 
     const data = { ...route };
+    // 라우터에서 리턴되어져 오는 Component를 가지로 렌더링을 한다.
+    // 기본적으로..
     data.children = ReactDOM.renderToString(
       <App context={context} store={store}>
         {route.component}
