@@ -19,6 +19,8 @@
  * Base styles
  * ========================================================================== */
 
+html, body { height:100%; overflow:hidden }
+
 html {
   color: #222;
   font-weight: 100;
@@ -110,6 +112,13 @@ textarea {
   padding: 0.2em 0;
 }
 
+:global(#app) {
+  height: 100%;
+}
+
+[data-reactroot] {
+  height: 100%;
+}
 /*
  * Print styles
  * Inlined to avoid the additional HTTP request:
@@ -185,3 +194,4 @@ textarea {
     page-break-after: avoid;
   }
 }
+

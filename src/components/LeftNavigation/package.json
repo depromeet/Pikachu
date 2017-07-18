@@ -1,0 +1,6 @@
+{
+  "name": "LeftNavigation",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./LeftNavigation.js"
+}
