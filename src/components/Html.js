@@ -54,6 +54,7 @@ class Html extends React.Component {
         <body>
           <div id="app" dangerouslySetInnerHTML={{ __html: children }} />
           <script dangerouslySetInnerHTML={{ __html: `window.App=${serialize(app)}` }} />
+
           {scripts.map(script => <script key={script} src={script} />)}
           {config.analytics.googleTrackingId &&
             <script
@@ -65,6 +66,7 @@ class Html extends React.Component {
           {config.analytics.googleTrackingId &&
             <script src="https://www.google-analytics.com/analytics.js" async defer />
           }
+          <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyArteKgEKnAuZKKDA7rhUA7dvaNWslRsEU&callback=initMap" async defer />
         </body>
       </html>
     );

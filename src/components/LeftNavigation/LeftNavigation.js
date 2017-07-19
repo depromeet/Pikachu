@@ -21,8 +21,12 @@ class LeftNavigation extends React.Component {
 
   render() {
     return (
-      <div className={s.lnb}>
-        hello
+      <div className={s.root}>
+        <div className={s.container}>
+          <div className={s.lnb}>
+            hello
+          </div>
+        </div>
       </div>
     );
   }

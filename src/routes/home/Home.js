@@ -12,6 +12,7 @@ import PropTypes from 'prop-types';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './Home.css';
 import LeftNavigation from '../../components/LeftNavigation';
+import Map from '../../components/Map';
 
 class Home extends React.Component {
   static propTypes = {
@@ -27,6 +28,7 @@ class Home extends React.Component {
       <div className={s.root}>
         <div className={s.container}>
           <LeftNavigation />
+          <Map />
         </div>
       </div>
     );

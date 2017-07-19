@@ -5,16 +5,14 @@
 }
 
 .root {
-  height: 100%;
+  -webkit-flex: 1;
+          flex: 1;
+  background: red;
 }
 
 .container {
   height: 100%;
-  margin: 0 auto;
 }
 
-.lnb {
-  height: 100%;
-  width: 80px;
-  background-color: #ddd;
+.map {
 }
